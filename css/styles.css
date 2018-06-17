@@ -113,6 +113,8 @@ nav h1 a {
 }
 .filter-icon {
   width: 10%;
+  min-width: 48px;
+  min-height: 48px;
   right:15px;
   position: absolute;
 }
@@ -308,11 +310,14 @@ nav h1 a {
   }
 }
 
-@media screen and (min-width:0) {
-
+@media screen and (min-width:660px) and (max-width: 954px) {
+  .restaurants-list li {
+    box-sizing: border-box;
+    width: 50%;
+  }
 }
 
-@media screen and (min-width:782px) and (max-width: 1089px) {
+@media screen and (min-width:954px) and (max-width: 1089px) {
   .restaurants-list li {
     box-sizing: border-box;
     margin-right: 5px;
