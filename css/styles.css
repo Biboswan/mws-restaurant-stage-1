@@ -41,7 +41,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 #footer {
   background-color: #444;
-  color: #aaa;
+  color: #d6d3d3;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -98,46 +98,69 @@ nav h1 a {
     text-decoration: underline;
 }
 /* ====================== Map ====================== */
-#map {
+.map {
   height: 400px;
   width: 100%;
   background-color: #ccc;
 }
 /* ====================== Restaurant Filtering ====================== */
-.filter-options {
-  width: 100%;
-  height: 50px;
-  background-color: #3397DB;
-  align-items: center;
-}
-.filter-options h2 {
+.ftilter-options h2{
   color: white;
   font-size: 1rem;
   font-weight: normal;
   line-height: 1;
   margin: 0 20px;
 }
+.filter-icon {
+  width: 10%;
+  right:15px;
+  position: absolute;
+}
+
+.filter-options {
+  list-style:none;
+  z-index: 10;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 208px;
+  position: absolute;
+  padding:0;
+  /* This trasform moves the drawer off canvas. */
+  -webkit-transform: translate(-208px, 0);
+  transform: translate(-208px, 0);
+  /* Optionally, we animate the drawer. */
+  transition: transform 0.3s ease;
+}
+.filter-options.open {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.filter-options__item {
+  border-bottom: 1px solid #E0E0E0;
+  width: 100%;
+  text-align: left;
+}
 .filter-options select {
   background-color: white;
+  height: 35px;
   border: 1px solid #fff;
   font-family: Arial,sans-serif;
   font-size: 11pt;
-  height: 35px;
   letter-spacing: 0;
   margin: 10px;
   padding: 0 10px;
   width: 200px;
 }
-
 /* ====================== Restaurant Listing ====================== */
-#restaurants-list {
+.restaurants-list {
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
   padding: 30px 15px 60px;
   text-align: center;
 }
-#restaurants-list li {
+.restaurants-list li {
   background-color: #fff;
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
@@ -147,14 +170,14 @@ nav h1 a {
   text-align: left;
   width: 100%;
 }
-#restaurants-list .restaurant-img {
+.restaurants-list .restaurant-img {
   background-color: #ccc;
   display: block;
   margin: 0;
   max-width: 100%;
   min-height: 248px;
 }
-#restaurants-list li h1 {
+.restaurants-list li h1 {
   color: #f18200;
   font-family: Arial,sans-serif;
   font-size: 14pt;
@@ -164,11 +187,11 @@ nav h1 a {
   margin: 20px 0 10px;
   text-transform: uppercase;
 }
-#restaurants-list p {
+.restaurants-list p {
   margin: 0;
   font-size: 11pt;
 }
-#restaurants-list li a {
+.restaurants-list li a {
   background-color: orange;
   border-bottom: 3px solid #eee;
   color: #fff;
@@ -273,7 +296,77 @@ nav h1 a {
   color: #666;
 }
 
+/*====================== Responsive Details ====================== */
 .container {
   display: flex;
   flex-wrap: wrap;
 }
+
+@media screen and (min-width: 480px) {
+  .restaurants-list li {
+    padding-top: 25px;
+  }
+}
+
+@media screen and (min-width:0) {
+
+}
+
+@media screen and (min-width:782px) and (max-width: 1089px) {
+  .restaurants-list li {
+    box-sizing: border-box;
+    margin-right: 5px;
+    width: calc((100% - 10px)/3);
+  }
+  .restaurants-list li:nth-child(3n+3) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width:1090px) {
+  .restaurants-list li {
+    box-sizing: border-box;
+    margin-right: 5px;
+    width: calc((100% - 15px)/4);
+  }
+  .restaurants-list li:nth-child(4n+4) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .filter-icon {
+    display:none;
+  }
+  .filter-options {
+    z-index: auto;
+    background-color: #009fff;
+    box-sizing: border-box;
+    width: 100vw;
+    position: absolute;
+    padding: 0;
+    margin-bottom:15px;
+    /* This trasform moves the drawer off canvas. */
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  .filter-options__item {
+    text-align: left;
+    border-bottom: none;
+    display: inline; 
+  }
+  .filter-options select {
+    background-color: white;
+    border: 1px solid #fff;
+    font-family: Arial,sans-serif;
+    font-size: 11pt;
+    letter-spacing: 0;
+    margin: 10px;
+    padding: 0 10px;
+    width: 200px;
+  }
+}
+
+
+
+
