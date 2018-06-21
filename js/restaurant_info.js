@@ -75,6 +75,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+  const tbody = document.createElement('tbody');
+  hours.appendChild(tbody);
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -85,8 +87,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     const time = document.createElement('td');
     time.innerHTML = operatingHours[key];
     row.appendChild(time);
-
-    hours.appendChild(row);
+    tbody.appendChild(row);
   }
 }
 
@@ -117,20 +118,28 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  const name = document.createElement('p');
+  li.classList.add('list');
+  const ul = document.createElement('ul');
+  const name = document.createElement('li');
+  name.classList.add('reviewer-name');
   name.innerHTML = review.name;
-  li.appendChild(name);
+  ul.appendChild(name);
 
-  const date = document.createElement('p');
+  const date = document.createElement('li');
   date.innerHTML = review.date;
-  li.appendChild(date);
+  date.classList.add('review-date');
+
+  ul.appendChild(date);
+  li.appendChild(ul);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
+  rating.classList.add('reviwer-rating');
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
+  comments.classList.add('reviwer-comment');
   li.appendChild(comments);
 
   return li;
@@ -140,7 +149,7 @@ createReviewHTML = (review) => {
  * Add restaurant name to the breadcrumb navigation menu
  */
 fillBreadcrumb = (restaurant=self.restaurant) => {
-  const breadcrumb = document.getElementById('breadcrumb');
+  const breadcrumb = document.querySelector('.breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
