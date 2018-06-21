@@ -75,7 +75,7 @@ window.initMap = () => {
     lat: 40.722216,
     lng: -73.987501
   };
-  self.map = new google.maps.Map(document.querySelector('.map'), {
+  self.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: loc,
     scrollwheel: false
@@ -180,5 +180,6 @@ addMarkersToMap = (restaurants = self.restaurants) => {
 const filteroptions = document.querySelector('.filter-options');
 const filtericon = document.querySelector('.filter-icon');
 filtericon.onclick = e => {
-filteroptions.classList.toggle('open');
+  filteroptions.classList.toggle('open');
 }
+
