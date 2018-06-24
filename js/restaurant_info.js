@@ -1,5 +1,4 @@
 let restaurant;
-var map;
 
 /**
  * Initialize Google map, called from HTML.
@@ -58,6 +57,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = restaurant.photo_description;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -169,4 +169,11 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+const body = document.querySelector('.app-wrap');
+const map = document.querySelector('.map');
+
+body.onload = e => {
+  map.getElementsByTagName('iframe')[0].title = 'map of location around the restaurant';
 }
