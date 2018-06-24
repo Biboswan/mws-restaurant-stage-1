@@ -1,4 +1,8 @@
 /* CSS Document */
+:root {
+  --theme-brown-color: #945c03;   
+}
+
 
 body,td,th,p {
 	font-family: Arial, Helvetica, sans-serif;
@@ -199,7 +203,7 @@ nav h1 a span {
 }
 
 .restaurants-list li h1 {
-  color: #945c03;
+  color: var(--theme-brown-color);
   font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;
@@ -215,7 +219,7 @@ nav h1 a span {
 }
 
 .restaurants-list li a {
-  background-color: #945c03;
+  background-color: var(--theme-brown-color);
   border-bottom: 3px solid #eee;
   color: #fff;
   display: inline-block;
@@ -268,7 +272,7 @@ nav h1 a span {
 }
 
 #restaurant-name {
-  color: #945c03;
+  color: var(--theme-brown-color);
   font-family: Arial,sans-serif;
   text-transform: uppercase;
   font-weight: 550;
@@ -292,7 +296,7 @@ nav h1 a span {
 }
 
 .reviews-container h2 {
-  color: #945c03;
+  color: var(--theme-brown-color);
 }
 
 #reviews-list {
@@ -340,7 +344,7 @@ nav h1 a span {
 
 .reviwer-rating {
   width: 27%;
-  background-color: #945c03;
+  background-color: var(--theme-brown-color);
   color: #fff;
   text-align: center;
   position: relative;
