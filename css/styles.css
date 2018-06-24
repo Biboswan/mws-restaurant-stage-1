@@ -104,7 +104,7 @@ nav h1 a span {
 
 /* Add a color to all links inside the list */
 .breadcrumb li a {
-    color: #0275d8;
+    color: #0469bf;
     text-decoration: none;
 }
 
@@ -262,11 +262,13 @@ nav h1 a span {
 
 .reviews-container,
 .restaurant-container {
+    box-sizing: border-box;
     max-width: 576px;
+    padding: 0 8px 8px 0;
 }
 
 #restaurant-name {
-  color: #f18200;
+  color: #945c03;
   font-family: Arial,sans-serif;
   text-transform: uppercase;
   font-weight: 550;
@@ -290,7 +292,7 @@ nav h1 a span {
 }
 
 .reviews-container h2 {
-  color: #f58500;
+  color: #945c03;
 }
 
 #reviews-list {
@@ -328,16 +330,17 @@ nav h1 a span {
 .reviewer-name {
   font-size: 15px;
   flex:0 1 25%;
-  color: #fff;
+  color: #1f1d1d;
 }
 
 .review-date {
   flex:0 1 25%;
+  color: #1f1d1d;
 }
 
 .reviwer-rating {
   width: 27%;
-  background-color: #f58500;
+  background-color: #945c03;
   color: #fff;
   text-align: center;
   position: relative;
