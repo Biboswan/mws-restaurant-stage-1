@@ -1,29 +1,34 @@
 /* CSS Document */
 
-body,td,th,p{
+body,td,th,p {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #333;
 	line-height: 1.5;
 }
+
 body {
 	background-color: #fdfdfd;
 	margin: 0;
 	position:relative;
 }
+
 ul, li {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
+	font-size: 14px;
 	color: #333;
 }
+
 a {
 	color: orange;
 	text-decoration: none;
 }
+
 a:hover, a:focus {
 	color: #3397db;
 	text-decoration: none;
 }
+
 a img{
 	border: none 0px #fff;
 }
@@ -31,18 +36,14 @@ a img{
 h1,
 h2 {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
 }
 
 .maincontent {
   background-color: #f3f3f3;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 #footer {
+  box-sizing: border-box; 
   background-color: #444;
   color: #d6d3d3;
   font-size: 8pt;
@@ -53,7 +54,7 @@ h2 {
 }
 /* ====================== Navigation ====================== */
 nav {
-  display:flex;
+  display: flex;
   height: 10.2vh;
   background-color: #252831;
   align-items: center;
@@ -62,29 +63,30 @@ nav {
 
 nav h1 {
   display: flex;
-  margin:0;
-}
-nav h1 a {
-  display: flex;
   justify-content: center;
   align-items: center;
+  margin:0;
+}
+
+nav h1 a {
+  display: flex;
   color: #fff;
   font-size: 16px;
   font-weight: 200;
   letter-spacing: 10px;
   text-transform: uppercase;
 }
+
 nav h1 a span {
   display:block;
   width: 100%;
 }
 
 .breadcrumb {
-    padding: 10px 40px 16px;
-    background-color: #eee;
-    font-size: 17px;
-    margin: 0;
-    flex: 1;
+  box-sizing: border-box;
+  padding: 10px 40px 16px;
+  background-color: #eee;
+  margin: 0;
 }
 
 /* Display list items side by side */
@@ -103,6 +105,7 @@ nav h1 a span {
 .breadcrumb li a {
     color: #0275d8;
     text-decoration: none;
+    font-size: 1em;
 }
 
 /* Add a color on mouse-over */
@@ -111,20 +114,18 @@ nav h1 a span {
     text-decoration: underline;
 }
 /* ====================== Map ====================== */
-#map {
-  height: 400px;
+
+.map-container {
+  width: 100%;
+  height: 50vh;
+}
+
+.map {
+  height: 100%;
   width: 100%;
   background-color: #ccc;
 }
 /* ====================== Restaurant Filtering ====================== */
-.ftilter-options h2{
-  color: white;
-  font-size: 1rem;
-  font-weight: normal;
-  line-height: 1;
-  margin: 0 20px;
-}
-
 .filter-icon {
   width: 10%;
   min-width: 48px;
@@ -145,6 +146,7 @@ nav h1 a span {
   /* Optionally, we animate the drawer. */
   transition: transform 0.3s ease;
 }
+
 .filter-options.open {
   z-index: 10;
   -webkit-transform: translate(0, 0);
@@ -156,6 +158,7 @@ nav h1 a span {
   width: 100%;
   text-align: left;
 }
+
 .filter-options select {
   background-color: white;
   height: 35px;
@@ -175,6 +178,7 @@ nav h1 a span {
   padding: 30px 15px 60px;
   text-align: center;
 }
+
 .restaurants-list li {
   background-color: #fff;
   border: 2px solid #ccc;
@@ -185,6 +189,7 @@ nav h1 a span {
   text-align: left;
   width: 100%;
 }
+
 .restaurants-list .restaurant-img {
   background-color: #ccc;
   display: block;
@@ -192,6 +197,7 @@ nav h1 a span {
   max-width: 100%;
   min-height: 248px;
 }
+
 .restaurants-list li h1 {
   color: #f18200;
   font-family: Arial,sans-serif;
@@ -202,10 +208,12 @@ nav h1 a span {
   margin: 20px 0 10px;
   text-transform: uppercase;
 }
+
 .restaurants-list p {
   margin: 0;
   font-size: 11pt;
 }
+
 .restaurants-list li a {
   background-color: orange;
   border-bottom: 3px solid #eee;
@@ -226,27 +234,29 @@ nav h1 a span {
 }
 
 .scrollable {
- overflow-y: scroll;
- -webkit-overflow-scrolling:touch;
- max-height: 82vh;
+  background-color: #f3f3f3;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling:touch;
+  max-height: 82vh;
 }
 
 .app-wrap header {
   max-height: 18vh;
 }
   
-.app-wrap #map-container {
+.app-wrap .map-container {
   height: 50vh;
   width: 100%;
 }
 
-.app-wrap #map {
+.app-wrap .map {
   background-color: #ccc;
 }
 
-#reviews-container,
-#restaurant-container {
-  padding: 0 15px 0 15px;
+.reviews-container,
+.restaurant-container {
+  box-sizing: border-box;
+  padding: 0 10px 0 10px;
   max-width: 576px;
   margin: auto;
 }
@@ -272,7 +282,7 @@ nav h1 a span {
   text-align: center;
 }
 
-#reviews-container h2 {
+.reviews-container h2 {
   color: #f58500;
 }
 
@@ -295,7 +305,6 @@ nav h1 a span {
   margin: 0 0 30px;
   overflow: hidden;
   padding: 0;
-  position: relative;
 }
 
  .list ul {
@@ -314,9 +323,11 @@ nav h1 a span {
   flex:0 1 25%;
   color: #fff;
 }
+
 .review-date {
   flex:0 1 25%;
 }
+
 .reviwer-rating {
   width: 27%;
   background-color: #f58500;
@@ -325,7 +336,8 @@ nav h1 a span {
   position: relative;
   left: 15px;
 }
-.reviwer-comment{
+
+.reviwer-comment {
   padding: 0 15px 0 15px;
 }
 
@@ -432,5 +444,34 @@ nav h1 a span {
     margin: 10px;
     padding: 0 10px;
     width: 250px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .breadcrumb {
+    width: 50vw;
+  }
+
+  .app-wrap .map-container {
+    width: 50vw;
+    height: 89.8vh;
+    right: 0;
+    top: 10.2vh;
+    position: fixed;
+  }
+  
+  .reviews-container,
+  .restaurant-container {
+    max-width: 50vw;
+    margin-left:0;
+    margin-top:0;
+  }
+
+  .app-wrap #footer {
+    width: 50%;
+  }
+
+  #restaurant-img1 {
+    width: 450px;
   }
 }
