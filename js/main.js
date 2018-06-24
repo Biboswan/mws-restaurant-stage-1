@@ -1,8 +1,9 @@
 let restaurants,
   neighborhoods,
   cuisines
-var map
 var markers = []
+
+const map = document.querySelector('.map');
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -75,7 +76,7 @@ window.initMap = () => {
     lat: 40.722216,
     lng: -73.987501
   };
-  self.map = new google.maps.Map(document.querySelector('.map'), {
+  self.map = new google.maps.Map(map, {
     zoom: 12,
     center: loc,
     scrollwheel: false
@@ -183,4 +184,10 @@ const filteroptions = document.querySelector('.filter-options');
 const filtericon = document.querySelector('.filter-icon');
 filtericon.onclick = e => {
   filteroptions.classList.toggle('open');
+}
+
+const body = document.querySelector('body');
+
+body.onload = e => {
+  map.getElementsByTagName('iframe')[0].title = 'map of the neighbourhood location with markers of the desired restaurants filtered';
 }
