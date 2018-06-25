@@ -8,79 +8,78 @@
 
 module.exports = function(grunt) {
 
-    grunt.initConfig({
-      responsive_images: {
-        dev: {
-          options: {
-            engine: 'im',
-            sizes: [
-            {
-              name: 'small',
-              width:400,
-              quality:40
-            }
-          ]
-          },
-  
-          /*
-          You don't need to change this part if you don't change
-          the directory structure.
-          */
-          files: [{
-            expand: true,
-            src: ['*.{gif,jpg,png}'],
-            cwd: 'img/',
-            dest: 'img_res/'
-          }]
-        }
-      },
-  
-      /* Clear out the images directory if it exists */
-      clean: {
-        dev: {
-          src: ['img_res'],
-        },
-      },
-  
-      /* Generate the images directory if it is missing */
-      mkdir: {
-        dev: {
-          options: {
-            create: ['img_res']
-          },
-        },
-      },
-  
-      /* Copy the original images into the images/directory */
-      copy: {
-        dev: {
-          files: [{
-            expand: true,
-            src: 'img/*.{gif,jpg,png,svg}',
-            dest: 'img_res/'
-          }]
-        },
-      },
+  grunt.initConfig({
+		responsive_images: {
+			dev: {
+				options: {
+					engine: 'im',
+					sizes: [
+					{
+						width:400,
+						quality:40
+					}
+					]
+				},
 
-      postcss: {
-        options: {
-          processors: [
-            require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
-          ]
-        },
-        dist: {
-          src: 'css/styles.css',
-          dest: 'build/styles.css'
-        }
-      },
+				/*
+				You don't need to change this part if you don't change
+				the directory structure.
+				*/
+				files: [{
+					expand: true,
+					src: ['*.{gif,jpg,png}'],
+					cwd: 'img/',
+					dest: 'img_res/'
+				}]
+			}
+		},
 
-      watch: {
-        styles: {
-            files: ['css/styles.css'],
-            tasks: ['postcss']
-        }   
-      }
-    });
+		/* Clear out the images directory if it exists */
+		clean: {
+			dev: {
+				src: ['img_res'],
+			},
+		},
+
+		/* Generate the images directory if it is missing */
+		mkdir: {
+			dev: {
+				options: {
+					create: ['img_res']
+				},
+			},
+		},
+
+		/* Copy the original images into the images/directory */
+		copy: {
+			dev: {
+				files: [{
+					expand: true,
+					src: 'img/*.{gif,jpg,png,svg}',
+					dest: 'img_res/'
+				}]
+			},
+		},
+	 
+		postcss: {
+			options: {
+				processors: [
+					require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
+				]
+			},
+			dist: {
+				src: 'css/styles.css',
+				dest: 'build/css/styles.css'
+			}
+		},
+
+		watch: {
+			styles: {
+					files: ['css/styles.css'],
+					tasks: ['postcss']
+			}   
+		}
+	});
     
     grunt.loadNpmTasks('grunt-responsive-images');
     grunt.loadNpmTasks('grunt-contrib-clean');
