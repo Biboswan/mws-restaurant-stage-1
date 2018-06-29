@@ -1,7 +1,8 @@
 let restaurants,
   neighborhoods,
-  cuisines
-var markers = []
+  cuisines,
+  pressed;
+var markers = [];
 
 const map = document.querySelector('.map');
 
@@ -186,6 +187,10 @@ const filteroptions = document.querySelector('.filter-options');
 const filtericon = document.querySelector('.filter-icon');
 filtericon.onclick = e => {
   filteroptions.classList.toggle('open');
+ 
+ pressed = filtericon.getAttribute("aria-pressed") === "true";
+  // Change aria-pressed to the opposite state
+  filtericon.setAttribute("aria-pressed", !pressed);
 }
 
 const body = document.querySelector('body');
