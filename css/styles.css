@@ -373,8 +373,7 @@ nav h1 a span {
 
 @media screen and (min-width: 500px) and (max-width: 659px) {
   .restaurants-list {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0 auto;
     width: 460px;
   }
 }
@@ -433,13 +432,12 @@ nav h1 a span {
     display:none;
   }
   .filter-options {
-    z-index: auto;
+    z-index: 0;
     background-color: #009fff;
     box-sizing: border-box;
     width: 100vw;
-    position: absolute;
+    position: relative;
     padding: 0;
-    margin-bottom:15px;
     /* This trasform moves the drawer off canvas. */
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
@@ -458,6 +456,10 @@ nav h1 a span {
     margin: 10px;
     padding: 0 10px;
     width: 250px;
+  }
+
+  .restaurants-list {
+    padding-top: 0;
   }
 }
 
