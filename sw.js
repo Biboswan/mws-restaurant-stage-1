@@ -21,7 +21,7 @@ self.addEventListener('install', event => {
 				'/filter.png', 
 				'/data/restaurants.json'
 			]);
-		})
+		}).then( () => self.skipWaiting())
 	);
 });
 
