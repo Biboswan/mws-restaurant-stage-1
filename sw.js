@@ -11,12 +11,13 @@ self.addEventListener('install', event => {
   event.waitUntil(
 		caches.open(staticCacheName).then(cache => {
 			return cache.addAll([
-				'/index.html',
-				'/restaurant.html',
-				'/js/dbhelper.js',
-			  '/js/main.js',
-				'/js/restaurant_info.js',
-				'/build/css/styles.css',
+				new Request('/index.html', { cache: 'no-cache' } ),
+				new Request('/restaurant.html', { cache: 'no-cache' }),
+				new Request('/js/dbhelper.js', { cache: 'no-cache' }),
+			  new Request('/js/main.js', { cache: 'no-cache' }),
+				new Request('/js/restaurant_info.js', { cache: 'no-cache' }),
+				new Request('/build/css/styles.css', { cache: 'no-cache' }),
+				'/js/controller.js',
 				'/filter.png', 
 				'/data/restaurants.json'
 			]);
