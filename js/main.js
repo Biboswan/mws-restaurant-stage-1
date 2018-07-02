@@ -183,6 +183,9 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 }
 
+/**
+ * Implement off canvas layout for filter options bar
+ */
 const filteroptions = document.querySelector('.filter-options');
 const filtericon = document.querySelector('.filter-icon');
 filtericon.onclick = e => {
@@ -193,6 +196,9 @@ filtericon.onclick = e => {
   filtericon.setAttribute("aria-pressed", !pressed);
 }
 
+/** 
+ * title to map once DOM body is loaded
+ */
 const body = document.querySelector('body');
 
 body.onload = e => {
