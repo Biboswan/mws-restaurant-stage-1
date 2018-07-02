@@ -23,12 +23,15 @@
       <section>
         <img alt="filter icon" class="filter-icon" role="button" aria-pressed="false" tabindex="0" src=".././filter.png"/>
         <ul class="filter-options">
+          <li class="form-title">Filter Results</li>
           <li class="filter-options__item">
+            <label class="label-filter-options" for="neighborhoods-select">Neighborhood Category</label>
             <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
               <option value="all">All Neighborhoods</option>
             </select>
           </li>
           <li class="filter-options__item">
+            <label class="label-filter-options" for="cuisines-select">Cusine Category</label>
             <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
               <option value="all">All Cuisines</option>
             </select>
