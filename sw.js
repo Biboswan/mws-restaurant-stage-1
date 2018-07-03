@@ -74,13 +74,11 @@ const serveImage = request => {
 	} else {
 		storageUrl = request.url;
 	}
-	request.url = storageUrl;
+	 const modifyreq = new URL(storageUrl);
 
 	return caches.open(contentImgsCache).then(cache => {
-		return cache.match(storageUrl).then(response => {
-			if (response) return response;
-
-			return fetch(request).then(networkResponse => {
+		return cache.match(request.url).then(response => {
+			return response || fetch(modifyreq).then(networkResponse => {
 				cache.put(storageUrl, networkResponse.clone());
 				return networkResponse;
 			});
