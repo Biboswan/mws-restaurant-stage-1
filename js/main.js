@@ -1,8 +1,10 @@
 let restaurants,
   neighborhoods,
-  cuisines
-var map
-var markers = []
+  cuisines,
+  pressed;
+var markers = [];
+
+const map = document.querySelector('.map');
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -75,7 +77,7 @@ window.initMap = () => {
     lat: 40.722216,
     lng: -73.987501
   };
-  self.map = new google.maps.Map(document.getElementById('map'), {
+  self.map = new google.maps.Map(map, {
     zoom: 12,
     center: loc,
     scrollwheel: false
@@ -112,7 +114,7 @@ updateRestaurants = () => {
 resetRestaurants = (restaurants) => {
   // Remove all restaurants
   self.restaurants = [];
-  const ul = document.getElementById('restaurants-list');
+  const ul = document.querySelector('.restaurants-list');
   ul.innerHTML = '';
 
   // Remove all map markers
@@ -125,7 +127,7 @@ resetRestaurants = (restaurants) => {
  * Create all restaurants HTML and add them to the webpage.
  */
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
-  const ul = document.getElementById('restaurants-list');
+  const ul = document.querySelector('.restaurants-list');
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
@@ -140,7 +142,11 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = DBHelper.imageUrlForRestaurant_400(restaurant);
+  
+  let image2x = DBHelper.imageUrlForRestaurant(restaurant);
+  image.srcset = `${image.src} 1x, ${image2x} 2x`;
+  image.alt = restaurant.photo_description;
   li.append(image);
 
   const name = document.createElement('h1');
@@ -175,4 +181,25 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     });
     self.markers.push(marker);
   });
+}
+
+/**
+ * Implement off canvas layout for filter options bar
+ */
+const filteroptions = document.querySelector('.filter-options');
+const filtericon = document.querySelector('.filter-icon');
+filtericon.onclick = e => {
+  filteroptions.classList.toggle('open');
+ 
+ pressed = filtericon.getAttribute("aria-pressed") === "true";
+  // Change aria-pressed to the opposite state
+  filtericon.setAttribute("aria-pressed", !pressed);
+}
+
+/** 
+ * title to map once DOM body is loaded
+ */
+const body = document.querySelector('body');
+body.onload = e => {
+  map.getElementsByTagName('iframe')[0].title = 'map of the neighbourhood location with markers of the desired restaurants filtered';
 }

@@ -150,7 +150,21 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`img_res/img/${restaurant.photograph}`);
+  }
+
+  /**
+   * Restaurant image URL resized to 400px
+   */
+  static imageUrlForRestaurant_400(restaurant) {
+    return (`img_res/${restaurant.photograph.split('.').join('-400.')}`);
+  }
+
+  /**
+   * Restaurant image URL resized to 560px
+   */
+  static imageUrlForRestaurant_560(restaurant) {
+    return (`img_res/${restaurant.photograph.split('.').join('-560.')}`);
   }
 
   /**

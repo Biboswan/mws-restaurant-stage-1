@@ -1,5 +1,4 @@
 let restaurant;
-var map;
 
 /**
  * Initialize Google map, called from HTML.
@@ -9,7 +8,7 @@ window.initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
+      self.map = new google.maps.Map(document.querySelector('.map'), {
         zoom: 16,
         center: restaurant.latlng,
         scrollwheel: false
@@ -55,9 +54,16 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  // Insert url and query to fetch correct size image with the properties of picture tag and srcset attribute  
+  let imagesource = document.getElementById('restaurant-img-source1');
+  let image400 = DBHelper.imageUrlForRestaurant_400(restaurant);
+  let image560 = DBHelper.imageUrlForRestaurant_560(restaurant);
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
+  image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.srcset = `${image560} 1x, ${image.src} 2x`;
+  image.alt = restaurant.photo_description;
+  imagesource.srcset = `${image400} 400w, ${image560} 560w, ${image.src} 800w`;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -75,6 +81,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+  const tbody = document.createElement('tbody');
+  hours.appendChild(tbody);
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -85,8 +93,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     const time = document.createElement('td');
     time.innerHTML = operatingHours[key];
     row.appendChild(time);
-
-    hours.appendChild(row);
+    tbody.appendChild(row);
   }
 }
 
@@ -94,7 +101,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-  const container = document.getElementById('reviews-container');
+  const container = document.querySelector('.reviews-container');
   const title = document.createElement('h2');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
@@ -117,20 +124,28 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  const name = document.createElement('p');
+  li.classList.add('list');
+  const ul = document.createElement('ul');
+  const name = document.createElement('li');
+  name.classList.add('reviewer-name');
   name.innerHTML = review.name;
-  li.appendChild(name);
+  ul.appendChild(name);
 
-  const date = document.createElement('p');
+  const date = document.createElement('li');
   date.innerHTML = review.date;
-  li.appendChild(date);
+  date.classList.add('review-date');
+
+  ul.appendChild(date);
+  li.appendChild(ul);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
+  rating.classList.add('reviwer-rating');
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
+  comments.classList.add('reviwer-comment');
   li.appendChild(comments);
 
   return li;
@@ -140,7 +155,7 @@ createReviewHTML = (review) => {
  * Add restaurant name to the breadcrumb navigation menu
  */
 fillBreadcrumb = (restaurant=self.restaurant) => {
-  const breadcrumb = document.getElementById('breadcrumb');
+  const breadcrumb = document.querySelector('.breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
@@ -160,4 +175,14 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+/** 
+ * Add title to map once DOM body is loaded
+ */
+const body = document.querySelector('.app-wrap');
+const map = document.querySelector('.map');
+
+body.onload = e => {
+  map.getElementsByTagName('iframe')[0].title = 'map of location around the restaurant';
 }
