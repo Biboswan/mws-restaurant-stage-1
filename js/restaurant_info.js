@@ -171,6 +171,9 @@ getParameterByName = (name, url) => {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
+/** 
+ * Add title to map once DOM body is loaded
+ */
 const body = document.querySelector('.app-wrap');
 const map = document.querySelector('.map');
 
