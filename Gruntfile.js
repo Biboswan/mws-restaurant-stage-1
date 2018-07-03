@@ -76,7 +76,7 @@ module.exports = function(grunt) {
 				dest: 'build/css/styles.css'
 			}
 		},
-
+		
 		// TODO: Implement cache busting
 		/** cacheBust: {
 			taskName: {
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
 			styles: {
 					files: ['css/styles.css'],
 					tasks: ['postcss']
-			}   
+			}
 
 			/** versionchange: {
 				files: ['dbhelper.js','restaurant_info.js', 'main.js','js/controller-64c5704ca5fb73f2-64c5704ca5fb73f2.js','build/css/styles-b4c7c6a14b354b4d-b4c7c6a14b354b4d.css'],
@@ -107,8 +107,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-postcss');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	//grunt.loadNpmTasks('grunt-cache-bust');
     grunt.registerTask('default', ['clean', 'mkdir', 'copy', 'responsive_images']);
-  };
-  
+  }; 
