@@ -62,11 +62,19 @@ self.addEventListener('fetch', event => {
 	}
 });
 
+/**
+ * Here we are dynamically caching restaurant images. Due to space limit, we shouldn't cache images of all sizes. 
+ * So we cache 560px image for both 400px and 560px requirement to able to serve images for both index and 
+ * restaurant html pages.
+ */
 const serveImage = request => {
 	let storageUrl;
 	if (request.url.includes('-400')) {
-		storageUrl = request.url.replace('-400', '').replace('s','s/img/');
+		storageUrl = request.url.replace('400', '560');
+	} else {
+		storageUrl = request.url;
 	}
+	request.url = storageUrl;
 
 	return caches.open(contentImgsCache).then(cache => {
 		return cache.match(storageUrl).then(response => {

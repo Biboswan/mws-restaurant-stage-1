@@ -54,10 +54,16 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  // Insert url and query to fetch correct size image with the properties of picture tag and srcset attribute  
+  let imagesource = document.getElementById('restaurant-img-source1');
+  let image400 = DBHelper.imageUrlForRestaurant_400(restaurant);
+  let image560 = DBHelper.imageUrlForRestaurant_560(restaurant);
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
+  image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.srcset = `${image560} 1x, ${image.src} 2x`;
   image.alt = restaurant.photo_description;
+  imagesource.srcset = `${image400} 400w, ${image560} 560w, ${image.src} 800w`;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;

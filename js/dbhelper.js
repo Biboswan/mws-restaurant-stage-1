@@ -161,6 +161,13 @@ class DBHelper {
   }
 
   /**
+   * Restaurant image URL resized to 560px
+   */
+  static imageUrlForRestaurant_560(restaurant) {
+    return (`img_res/${restaurant.photograph.split('.').join('-560.')}`);
+  }
+
+  /**
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {
