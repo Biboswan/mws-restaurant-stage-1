@@ -109,5 +109,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	//grunt.loadNpmTasks('grunt-cache-bust');
-    grunt.registerTask('default', ['clean', 'mkdir', 'copy', 'responsive_images']);
+    grunt.registerTask('default', ['clean', 'mkdir', 'copy', 'responsive_images','postcss']);
   }; 
