@@ -14,12 +14,14 @@ self.addEventListener('install', event => {
 				new Request('/index.html', { cache: 'no-cache' } ),
 				new Request('/restaurant.html', { cache: 'no-cache' }),
 				new Request('/js/dbhelper.js', { cache: 'no-cache' }),
-			  new Request('/js/main.js', { cache: 'no-cache' }),
+			  	new Request('/js/main.js', { cache: 'no-cache' }),
 				new Request('/js/restaurant_info.js', { cache: 'no-cache' }),
 				new Request('/build/css/styles.css', { cache: 'no-cache' }),
-				'/js/controller.js',
-				'/filter.png', 
-				'/data/restaurants.json'
+				new Request('/js/controller.js', {cache: 'no-cache'}),
+				new Request('manifest.json', {cache: 'no-cache'}),
+				'js/idb.js',
+				'/icons/RR-32.png',
+				'/filter.png',
 			]);
 		}).then( () => self.skipWaiting())
 	);
