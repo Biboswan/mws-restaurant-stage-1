@@ -11,17 +11,17 @@ self.addEventListener('install', event => {
   event.waitUntil(
 		caches.open(staticCacheName).then(cache => {
 			return cache.addAll([
-				new Request('/index.html', { cache: 'no-cache' } ),
-				new Request('/restaurant.html', { cache: 'no-cache' }),
-				new Request('/js/dbhelper.js', { cache: 'no-cache' }),
-			  	new Request('/js/main.js', { cache: 'no-cache' }),
-				new Request('/js/restaurant_info.js', { cache: 'no-cache' }),
-				new Request('/build/css/styles.css', { cache: 'no-cache' }),
-				new Request('/js/controller.js', {cache: 'no-cache'}),
+				new Request('index.html', { cache: 'no-cache' } ),
+				new Request('restaurant.html', { cache: 'no-cache' }),
+				new Request('js/controller.js', { cache: 'no-cache' }),
+				new Request('js/dbhelper.js', { cache: 'no-cache' }),
+				new Request('js/idb.js', { cache: 'no-cache' }),
+			  	new Request('js/main.js', { cache: 'no-cache' }),
+				new Request('js/restaurant_info.js', { cache: 'no-cache' }),
+				new Request('css/styles.css', { cache: 'no-cache' }),
 				new Request('manifest.json', {cache: 'no-cache'}),
-				'js/idb.js',
-				'/icons/RR-32.png',
-				'/filter.png',
+				'icons/RR-32.png',
+				'filter.png',
 			]);
 		}).then( () => self.skipWaiting())
 	);
@@ -56,11 +56,11 @@ self.addEventListener('fetch', event => {
 			return;
 		}
 
-	event.respondWith(
-		caches.match(event.request,{"ignoreSearch":true}).then(response => {
-			return response || fetch(event.request);
-		})
-	);
+		event.respondWith(
+			caches.match(event.request,{"ignoreSearch":true}).then(response => {
+				return response || fetch(event.request);
+			})
+		);
 	}
 });
 
@@ -79,7 +79,7 @@ const serveImage = request => {
 	 const modifyreq = new URL(storageUrl);
 
 	return caches.open(contentImgsCache).then(cache => {
-		return cache.match(request.url).then(response => {
+		return cache.match(modifyreq).then(response => {
 			return response || fetch(modifyreq).then(networkResponse => {
 				cache.put(storageUrl, networkResponse.clone());
 				return networkResponse;
