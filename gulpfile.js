@@ -6,11 +6,9 @@ const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync').create();
-//const uglify = require('gulp-uglify');
 const uglifyes = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const uglify = composer(uglifyes, console)
-const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
 const imageResize = require('gulp-image-resize');
  
@@ -33,9 +31,6 @@ gulp.task('copy index.html', () => {
 
 gulp.task('copy sw.js', () => {
   return gulp.src('sw.js')
- /* .pipe(babel({
-    presets: ['env']
-  }))*/
   .pipe(uglify())
 		.pipe(gulp.dest('dist'));
 })
@@ -48,6 +43,7 @@ gulp.task('copy restaurant.html', () => {
 gulp.task('scripts-common', () => {
   return gulp.src(['js/controller.js','js/idb.js','js/dbhelper.js',])
  .pipe(sourcemaps.init())
+ .pipe(concat('all.js'))
   .pipe(uglify()) 
  .pipe(sourcemaps.write())
 	.pipe(gulp.dest('dist/js/'));
