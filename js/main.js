@@ -200,6 +200,6 @@ filtericon.onclick = e => {
  * title to map once DOM body is loaded
  */
 const body = document.querySelector('body');
-body.onload = e => {
+body.onload = () => {
   map.getElementsByTagName('iframe')[0].title = 'map of the neighbourhood location with markers of the desired restaurants filtered';
 }

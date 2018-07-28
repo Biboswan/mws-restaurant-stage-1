@@ -1,5 +1,5 @@
 const staticCacheName = 'restaurantreviews-static-v1';
-const contentImgsCache = 'restaurantreviews-content-v2';
+const contentImgsCache = 'restaurantreviews-content-v1';
 const allCaches = [
   staticCacheName,
   contentImgsCache
@@ -11,17 +11,15 @@ self.addEventListener('install', event => {
   event.waitUntil(
 		caches.open(staticCacheName).then(cache => {
 			return cache.addAll([
-				new Request('/index.html', { cache: 'no-cache' } ),
-				new Request('/restaurant.html', { cache: 'no-cache' }),
-				new Request('/js/dbhelper.js', { cache: 'no-cache' }),
-			  	new Request('/js/main.js', { cache: 'no-cache' }),
-				new Request('/js/restaurant_info.js', { cache: 'no-cache' }),
-				new Request('/build/css/styles.css', { cache: 'no-cache' }),
-				new Request('/js/controller.js', {cache: 'no-cache'}),
+				new Request('index.html', { cache: 'no-cache' } ),
+				new Request('restaurant.html', { cache: 'no-cache' }),
+				new Request('js/all.js', { cache: 'no-cache' }),
+			  	new Request('js/main.js', { cache: 'no-cache' }),
+				new Request('js/restaurant_info.js', { cache: 'no-cache' }),
+				new Request('css/styles.css', { cache: 'no-cache' }),
 				new Request('manifest.json', {cache: 'no-cache'}),
-				'js/idb.js',
-				'/icons/RR-32.png',
-				'/filter.png',
+				'icons/RR-32.png',
+				'filter.png',
 			]);
 		}).then( () => self.skipWaiting())
 	);
@@ -56,11 +54,11 @@ self.addEventListener('fetch', event => {
 			return;
 		}
 
-	event.respondWith(
-		caches.match(event.request,{"ignoreSearch":true}).then(response => {
-			return response || fetch(event.request);
-		})
-	);
+		event.respondWith(
+			caches.match(event.request,{"ignoreSearch":true}).then(response => {
+				return response || fetch(event.request);
+			})
+		);
 	}
 });
 
