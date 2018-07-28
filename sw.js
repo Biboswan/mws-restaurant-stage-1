@@ -1,5 +1,5 @@
 const staticCacheName = 'restaurantreviews-static-v1';
-const contentImgsCache = 'restaurantreviews-content-v1';
+const contentImgsCache = 'restaurantreviews-content-v2';
 const allCaches = [
   staticCacheName,
   contentImgsCache
