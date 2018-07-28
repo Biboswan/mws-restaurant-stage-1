@@ -14,4 +14,4 @@
 
     1. cd `dist`
 
-   2. For Python 3.x, you can use python3 -m http.server 8000. If you don't  have Python installed, navigate to Python's website to download and install the software.
+   2. For Python 3.x, you can use `python3 -m http.server 8000`. If you don't  have Python installed, navigate to Python's website to download and install the software.
