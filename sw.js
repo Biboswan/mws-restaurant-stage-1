@@ -1,5 +1,5 @@
 const staticCacheName = 'restaurantreviews-static-v1';
-const contentImgsCache = 'restaurantreviews-content-v2';
+const contentImgsCache = 'restaurantreviews-content-v1';
 const allCaches = [
   staticCacheName,
   contentImgsCache
@@ -13,9 +13,7 @@ self.addEventListener('install', event => {
 			return cache.addAll([
 				new Request('index.html', { cache: 'no-cache' } ),
 				new Request('restaurant.html', { cache: 'no-cache' }),
-				new Request('js/controller.js', { cache: 'no-cache' }),
-				new Request('js/dbhelper.js', { cache: 'no-cache' }),
-				new Request('js/idb.js', { cache: 'no-cache' }),
+				new Request('js/all.js', { cache: 'no-cache' }),
 			  	new Request('js/main.js', { cache: 'no-cache' }),
 				new Request('js/restaurant_info.js', { cache: 'no-cache' }),
 				new Request('css/styles.css', { cache: 'no-cache' }),
