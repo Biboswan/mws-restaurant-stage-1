@@ -1,5 +1,5 @@
 const staticCacheName = 'restaurantreviews-static-v1';
-const contentImgsCache = 'restaurantreviews-content-v1';
+const contentImgsCache = 'restaurantreviews-content-v2';
 const allCaches = [
   staticCacheName,
   contentImgsCache
@@ -79,7 +79,7 @@ const serveImage = request => {
 	 const modifyreq = new URL(storageUrl);
 
 	return caches.open(contentImgsCache).then(cache => {
-		return cache.match(request.url).then(response => {
+		return cache.match(modifyreq).then(response => {
 			return response || fetch(modifyreq).then(networkResponse => {
 				cache.put(storageUrl, networkResponse.clone());
 				return networkResponse;
