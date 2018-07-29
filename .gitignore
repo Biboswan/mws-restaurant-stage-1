@@ -2,3 +2,4 @@ node_modules/
 .DS_Store
 img_res/
 dist/
+package-lock.json/
