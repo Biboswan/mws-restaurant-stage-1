@@ -5,31 +5,34 @@ let restaurant;
  */
 window.initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
+    if (error) {
+      // Got an error!
       console.error(error);
     } else {
       self.map = new google.maps.Map(document.querySelector('.map'), {
         zoom: 16,
         center: restaurant.latlng,
-        scrollwheel: false
+        scrollwheel: false,
       });
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
-}
+};
 
 /**
  * Get current restaurant from page URL.
  */
-fetchRestaurantFromURL = (callback) => {
-  if (self.restaurant) { // restaurant already fetched!
-    callback(null, self.restaurant)
+fetchRestaurantFromURL = callback => {
+  if (self.restaurant) {
+    // restaurant already fetched!
+    callback(null, self.restaurant);
     return;
   }
   const id = getParameterByName('id');
-  if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
+  if (!id) {
+    // no id found in URL
+    error = 'No restaurant id in URL';
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -39,10 +42,21 @@ fetchRestaurantFromURL = (callback) => {
         return;
       }
       fillRestaurantHTML();
-      callback(null, restaurant)
+      callback(null, restaurant);
+    });
+
+    DBHelper.fetchReviewsById(id, (error, reviews) => {
+      self.reviews = reviews;
+      if (!reviews) {
+        console.error(error);
+        return;
+      }
+
+      // fill reviews
+      fillReviewsHTML();
     });
   }
-}
+};
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -54,7 +68,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  // Insert url and query to fetch correct size image with the properties of picture tag and srcset attribute  
+  // Insert url and query to fetch correct size image with the properties of picture tag and srcset attribute
   let imagesource = document.getElementById('restaurant-img-source1');
   let image400 = DBHelper.imageUrlForRestaurant_400(restaurant);
   let image560 = DBHelper.imageUrlForRestaurant_560(restaurant);
@@ -72,14 +86,14 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
-}
+};
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
-fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
+fillRestaurantHoursHTML = (
+  operatingHours = self.restaurant.operating_hours
+) => {
   const hours = document.getElementById('restaurant-hours');
   const tbody = document.createElement('tbody');
   hours.appendChild(tbody);
@@ -95,18 +109,18 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     row.appendChild(time);
     tbody.appendChild(row);
   }
-}
+};
 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (reviews = self.reviews) => {
   const container = document.querySelector('.reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
-  if (!reviews) {
+  if (reviews.length === 0) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
     container.appendChild(noReviews);
@@ -117,12 +131,12 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
-}
+};
 
 /**
  * Create review HTML and add it to the webpage.
  */
-createReviewHTML = (review) => {
+createReviewHTML = review => {
   const li = document.createElement('li');
   li.classList.add('list');
   const ul = document.createElement('ul');
@@ -132,7 +146,8 @@ createReviewHTML = (review) => {
   ul.appendChild(name);
 
   const date = document.createElement('li');
-  date.innerHTML = review.date;
+  const temp = Date(review.updatedAt).split(' ');
+  date.innerHTML = [temp[1], temp[2] + ',', temp[3]].join(' ');
   date.classList.add('review-date');
 
   ul.appendChild(date);
@@ -149,40 +164,38 @@ createReviewHTML = (review) => {
   li.appendChild(comments);
 
   return li;
-}
+};
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
  */
-fillBreadcrumb = (restaurant=self.restaurant) => {
+fillBreadcrumb = (restaurant = self.restaurant) => {
   const breadcrumb = document.querySelector('.breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
-}
+};
 
 /**
  * Get a parameter by name from page URL.
  */
 getParameterByName = (name, url) => {
-  if (!url)
-    url = window.location.href;
+  if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');
   const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
     results = regex.exec(url);
-  if (!results)
-    return null;
-  if (!results[2])
-    return '';
+  if (!results) return null;
+  if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+};
 
-/** 
+/**
  * Add title to map once DOM body is loaded
  */
 const body = document.querySelector('.app-wrap');
 const map = document.querySelector('.map');
 
 body.onload = e => {
-  map.getElementsByTagName('iframe')[0].title = 'map of location around the restaurant';
-}
+  map.getElementsByTagName('iframe')[0].title =
+    'map of location around the restaurant';
+};
