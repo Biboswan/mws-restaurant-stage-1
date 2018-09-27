@@ -334,4 +334,36 @@ class DBHelper {
     const store = tx.objectStore('reviews');
     return store.get(restaurant_id);
   }
+
+  static toggleFavouriteRestaurantNetwork({ id, is_favorite }) {
+    fetch(
+      `${this.RESTAURANTS_DATABASE_URL}/${id}/?is_favorite=${!is_favorite}`,
+      {
+        method: 'PUT',
+      }
+    )
+      .then(response => response.json())
+      .then(data => console.log(data));
+  }
+
+  static toggleFavouriteRestaurantLocal(db, restaurant) {
+    let tx, store;
+    tx = db.transaction('restaurants', 'readwrite');
+    store = tx.objectStore('restaurants');
+    restaurant.is_favorite = !restaurant.is_favorite;
+    store.put(restaurant);
+    return tx.complete;
+  }
+
+  static toggleRestaurantFavourite(restaurant) {
+    if ('indexedDB' in window) {
+      this.dbPromise.then(async db => {
+        if (db) {
+          await this.toggleFavouriteRestaurantLocal(db, restaurant);
+        }
+      });
+    }
+
+    this.toggleFavouriteRestaurantNetwork(restaurant);
+  }
 }
