@@ -239,12 +239,12 @@ nav h1 a span {
 
 .view-details {
   background-color: var(--theme-brown-color);
-  border-bottom: 3px solid #eee;
+  border-bottom: 12px solid #fff;
   color: #fff;
   display: inline-block;
   font-size: 10pt;
   margin: 15px 0 0;
-  padding: 10px 30px 10px;
+  padding: 17px 30px 10px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;

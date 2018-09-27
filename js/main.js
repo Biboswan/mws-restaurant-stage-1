@@ -186,7 +186,7 @@ createRestaurantHTML = restaurant => {
     favourite.setAttribute('aria-checked', !ischecked);
     favourite.classList.toggle('favourite-checked');
   };
-
+  favourite.innerHTML = 'Favorite';
   endrow.append(favourite);
   li.append(endrow);
   return li;
