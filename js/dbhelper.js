@@ -43,11 +43,11 @@ class DBHelper {
    * Fetch all restaurants from network
    */
   static fetchRestaurantsFromNetwork(callback) {
-    fetch(this.RESTAURANTS_RESTAURANTS_DATABASE_URL)
+    fetch(this.RESTAURANTS_DATABASE_URL)
       .then(response => response.json())
       .then(data => {
         callback(null, data);
-        if ("indexedDB" in window) {
+        if ('indexedDB' in window) {
           this.fillDatabase(data);
         }
       })
@@ -83,7 +83,7 @@ class DBHelper {
           return callback(null, reviews);
         }
       }
-      this.fetchRestaurantFromNetwork(id, callback);
+      this.fetchReviewsFromNetwork(id, callback);
     });
   }
 
@@ -95,10 +95,10 @@ class DBHelper {
       .then(response => response.json())
       .then(data => {
         if (!data) {
-          callback("Restaurant does not exist", null);
+          callback('Restaurant does not exist', null);
         } else {
           callback(null, data);
-          if ("indexedDB" in window) {
+          if ('indexedDB' in window) {
             this.fillDatabase([data]);
           }
         }
@@ -110,14 +110,14 @@ class DBHelper {
   }
 
   static fetchReviewsFromNetwork(id, callback) {
-    fetch(`${this.REVIEWS_DATABASE_URL}/${id}`)
+    fetch(`${this.REVIEWS_DATABASE_URL}/?restaurant_id=${id}`)
       .then(response => response.json())
       .then(data => {
         if (!data) {
-          callback("Restaurant does not exist", null);
+          callback('Reviews does not exist', null);
         } else {
           callback(null, data);
-          if ("indexedDB" in window) {
+          if ('indexedDB' in window) {
             this.fillReviewsDatabase(data, id);
           }
         }
@@ -174,11 +174,11 @@ class DBHelper {
         callback(error, null);
       } else {
         let results = restaurants;
-        if (cuisine != "all") {
+        if (cuisine != 'all') {
           // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
-        if (neighborhood != "all") {
+        if (neighborhood != 'all') {
           // filter by neighborhood
           results = results.filter(r => r.neighborhood == neighborhood);
         }
@@ -267,37 +267,37 @@ class DBHelper {
       title: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant),
       map: map,
-      animation: google.maps.Animation.DROP
+      animation: google.maps.Animation.DROP,
     });
     return marker;
   }
 
   static openDatabase() {
     //check for support
-    if (!("indexedDB" in window)) {
+    if (!('indexedDB' in window)) {
       console.log("This browser doesn't support IndexedDB");
       return Promise.resolve();
     }
-    return idb.open("restaurant-review-stores", 1, upgradeDb => {
-      upgradeDb.createObjectStore("restaurants", {
-        keyPath: "id"
+    return idb.open('restaurant-review-stores', 1, upgradeDb => {
+      upgradeDb.createObjectStore('restaurants', {
+        keyPath: 'id',
       });
-      upgradeDb.createObjectStore("reviews");
+      upgradeDb.createObjectStore('reviews');
     });
   }
 
   static fillDatabase(items) {
     let tx, store;
     this.dbPromise.then(db => {
-      tx = db.transaction("restaurants", "readwrite");
-      store = tx.objectStore("restaurants");
+      tx = db.transaction('restaurants', 'readwrite');
+      store = tx.objectStore('restaurants');
       return Promise.all(items.map(item => store.put(item)))
         .catch(e => {
           tx.abort();
           console.log(e);
         })
         .then(() => {
-          console.log("All items added successfully!");
+          console.log('All items added successfully!');
         });
     });
   }
@@ -305,8 +305,8 @@ class DBHelper {
   static fillReviewsDatabase(item, restaurant_id) {
     let tx, store;
     this.dbPromise.then(db => {
-      tx = db.transaction("reviews", "readwrite");
-      store = tx.objectStore("reviews");
+      tx = db.transaction('reviews', 'readwrite');
+      store = tx.objectStore('reviews');
       store
         .put(item, restaurant_id)
         .catch(e => {
@@ -314,15 +314,15 @@ class DBHelper {
           console.log(e);
         })
         .then(() => {
-          console.log("item added successfully!");
+          console.log('item added successfully!');
         });
       return tx.complete;
     });
   }
 
   static fetchRestaurantsFrmLocal(db) {
-    const tx = db.transaction("restaurants");
-    const store = tx.objectStore("restaurants");
+    const tx = db.transaction('restaurants');
+    const store = tx.objectStore('restaurants');
     store.getAll().then(restaurants => {
       this.restaurants = restaurants;
     });
@@ -330,8 +330,8 @@ class DBHelper {
   }
 
   static fetchReviewsFrmLocal(db, restaurant_id) {
-    const tx = db.transaction("reviews");
-    const store = tx.objectStore("reviews");
+    const tx = db.transaction('reviews');
+    const store = tx.objectStore('reviews');
     return store.get(restaurant_id);
   }
 }
