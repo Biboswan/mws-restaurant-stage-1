@@ -146,7 +146,8 @@ createReviewHTML = review => {
   ul.appendChild(name);
 
   const date = document.createElement('li');
-  date.innerHTML = review.updatedAt;
+  const temp = Date(review.updatedAt).split(' ');
+  date.innerHTML = [temp[1], temp[2] + ',', temp[3]].join(' ');
   date.classList.add('review-date');
 
   ul.appendChild(date);
