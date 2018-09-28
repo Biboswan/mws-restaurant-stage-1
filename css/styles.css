@@ -395,6 +395,20 @@ nav h1 a span {
   color: #666;
 }
 
+.add-review-btn {
+  background-color: var(--theme-brown-color);
+  color: #fff;
+  width: 25%;
+  font-size: 10pt;
+  min-width: 45px;
+  cursor: pointer;
+}
+
+.review-form {
+  display: 'none';
+  flex-direction: column;
+  margin-top: 10px;
+}
 /*====================== Responsive Details ====================== */
 .container {
   display: flex;

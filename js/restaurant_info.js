@@ -117,8 +117,19 @@ fillRestaurantHoursHTML = (
 fillReviewsHTML = (reviews = self.reviews) => {
   const container = document.querySelector('.reviews-container');
   const title = document.createElement('h3');
+
   title.innerHTML = 'Reviews';
-  container.appendChild(title);
+  const add_review = document.createElement('button');
+  add_review.classList.add('add-review-btn');
+  add_review.innerHTML = 'Add Review';
+  add_review.value = 'Add Review';
+  add_review.onclick = () => showReviewForm();
+  const header_container = document.createElement('div');
+  header_container.classList.add('flex-container');
+  header_container.append(title);
+  header_container.append(add_review);
+
+  container.appendChild(header_container);
 
   if (reviews.length === 0) {
     const noReviews = document.createElement('p');
@@ -126,6 +137,7 @@ fillReviewsHTML = (reviews = self.reviews) => {
     container.appendChild(noReviews);
     return;
   }
+
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
@@ -189,13 +201,45 @@ getParameterByName = (name, url) => {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
+onReviewCancel = () => {
+  const review_form = document.querySelector('.review-form');
+  const add_review = document.querySelector('.add-review-btn');
+  review_form.style.display = 'none';
+  add_review.style.display = 'block';
+};
+
+onReviewSubmit = () => {
+  const review_form = document.querySelector('.review-form');
+  //Extract form data
+  const name = review_form['name'].value;
+  const rating = review_form['rating'].value;
+  const comments = review_form['comments'].value;
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+
+  // Data to be send
+  let postData = { restaurant_id: id, name, rating, comments };
+  console.log(postData);
+  DBHelper.addNewReview(postData, review => {
+    onReviewCancel();
+    const ul = document.getElementById('reviews-list');
+    ul.insertAdjacentElement('afterbegin', createReviewHTML(review));
+  });
+};
+
+showReviewForm = () => {
+  const add_review = document.querySelector('.add-review-btn');
+  const review_form = document.querySelector('.review-form');
+  add_review.style.display = 'none';
+  review_form.style.display = 'flex';
+};
+
 /**
- * Add title to map once DOM body is loaded
+ * Add title to map once map is loaded
  */
-const body = document.querySelector('.app-wrap');
 const map = document.querySelector('.map');
 
-body.onload = e => {
+map.onload = e => {
   map.getElementsByTagName('iframe')[0].title =
     'map of location around the restaurant';
 };

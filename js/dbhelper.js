@@ -308,7 +308,7 @@ class DBHelper {
       tx = db.transaction('reviews', 'readwrite');
       store = tx.objectStore('reviews');
       store
-        .put(item, restaurant_id)
+        .put(item.reverse(), restaurant_id)
         .catch(e => {
           tx.abort();
           console.log(e);
@@ -365,5 +365,44 @@ class DBHelper {
     }
 
     this.toggleFavouriteRestaurantNetwork(restaurant);
+  }
+
+  static addNewReview(data, callback) {
+    if ('indexedDB' in window) {
+      this.dbPromise.then(async db => {
+        if (db) {
+          let dbData = { updatedAt: Date.now(), ...data };
+          await this.addNewReviewLocal(db, dbData);
+          callback(dbData);
+        }
+      });
+    }
+
+    this.addNewReviewNetwork(data);
+  }
+
+  static addNewReviewLocal(db, data) {
+    const tx = db.transaction('reviews');
+    const store = tx.objectStore('reviews');
+    const { restaurant_id } = data;
+    return store.get(restaurant_id).then(reviews => {
+      console.log(reviews);
+      reviews.unshift(data);
+      store.put(reviews, restaurant_id);
+      return tx.complete;
+    });
+  }
+
+  static addNewReviewNetwork(data) {
+    fetch(`${this.REVIEWS_DATABASE_URL}/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(data => console.log(data));
   }
 }

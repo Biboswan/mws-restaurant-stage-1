@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Normalize.css for better cross-browser consistency -->
-    <meta name="viewport" content="width=device-width" initial-scale="1">
-    <link rel="shortcut icon" href="icons/RR-32.png">
-    <meta charset="utf-8">
-    <!-- Main CSS file -->
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Restaurant Info</title>
-  </head>
-  <body class="app-wrap">
+
+<head>
+  <!-- Normalize.css for better cross-browser consistency -->
+  <meta name="viewport" content="width=device-width" initial-scale="1">
+  <link rel="shortcut icon" href="icons/RR-32.png">
+  <meta charset="utf-8">
+  <!-- Main CSS file -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Restaurant Info</title>
+</head>
+
+<body class="app-wrap">
   <!-- Beginning header -->
   <header>
     <!-- Beginning nav -->
@@ -17,8 +19,8 @@
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
-      <ul aria-label="breadcrumb" role="navigation" class="breadcrumb" >
-        <li><a href="/">Home</a></li>
+    <ul aria-label="breadcrumb" role="navigation" class="breadcrumb">
+      <li><a href="/">Home</a></li>
     </ul>
     <!-- End breadcrumb -->
     <!-- End nav -->
@@ -26,46 +28,69 @@
   <!-- End header -->
 
   <!-- Beginning main -->
-    <div class="scrollable">
-      <main class="maincontent">
-    <!-- Beginning map -->
-    <section class="map-container">
-      <div role="application" class="map"></div>
-    </section>
-    <!-- End map -->
-    <!-- Beginning restaurant -->
-    <section class="restaurantnreview">
-      <section class="restaurant-container">
-        <h2 id="restaurant-name"></h2>
+  <div class="scrollable">
+    <main class="maincontent">
+      <!-- Beginning map -->
+      <section class="map-container">
+        <div role="application" class="map"></div>
+      </section>
+      <!-- End map -->
+      <!-- Beginning restaurant -->
+      <section class="restaurantnreview">
+        <section class="restaurant-container">
+          <h2 id="restaurant-name"></h2>
           <figure id="restaurant-img-frame">
             <picture>
-                <source id="restaurant-img-source1" media="(max-width: 560px)" sizes="100vw">
-                <img id="restaurant-img">
+              <source id="restaurant-img-source1" media="(max-width: 560px)" sizes="100vw">
+              <img id="restaurant-img">
             </picture>
             <figcaption id="restaurant-cuisine"></figcaption>
           </figure>
-        <p id="restaurant-address"></p>
-            <table id="restaurant-hours">
-              <thead>
-                <tr><th>Day</th><th>Opening Hours</th></tr>
-              </thead>
+          <p id="restaurant-address"></p>
+          <table id="restaurant-hours">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Opening Hours</th>
+              </tr>
+            </thead>
           </table>
+        </section>
+        <!-- end restaurant -->
+        <!-- Beginning reviews -->
+        <section class="reviews-container">
+          <form onsubmit="event.preventDefault()" class="review-form">
+            <label>Name:
+              <input name="name" placeholder='Enter your name' required />
+            </label>
+            <label>Rating:
+              <select name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </label>
+            <label>Review:
+              <textarea name="comments" placeholder='Enter your review here...' required></textarea>
+            </label>
+            <div class="flex-container">
+              <button onclick="onReviewSubmit()">Submit</button><button onclick="onReviewCancel()">Cancel</button>
+            </div>
+          </form>
+          <ul id="reviews-list"></ul>
+        </section>
       </section>
-      <!-- end restaurant -->
-      <!-- Beginning reviews -->
-      <section class="reviews-container">
-        <ul id="reviews-list"></ul>
-      </section>
-  </section>
-    <!-- End reviews -->
-  </main>
-  <!-- End main -->
+      <!-- End reviews -->
+    </main>
+    <!-- End main -->
 
-  <!-- Beginning footer -->
-  <footer id="footer">
-    Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
-  </footer>
-    </div>
+    <!-- Beginning footer -->
+    <footer id="footer">
+      Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+    </footer>
+  </div>
   <!-- End footer -->
 
   <!-- Beginning scripts -->
@@ -76,6 +101,6 @@
   <!-- End scripts -->
   <noscript>Your javascript is disabled</noscript>
 
-  </body>
+</body>
 
 </html>
