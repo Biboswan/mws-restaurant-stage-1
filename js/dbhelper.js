@@ -375,7 +375,11 @@ class DBHelper {
     };
 
     //Background Sync
-    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+    if (
+      navigator.serviceWorker &&
+      navigator.serviceWorker.controller &&
+      'SyncManager' in window
+    ) {
       navigator.serviceWorker.controller.postMessage({
         type: 'ADD_REVIEW_SYNC',
         payload: {
@@ -389,7 +393,13 @@ class DBHelper {
         .then(data => {
           console.log('review uploaded!');
           //Once reviewed is uploaded, update the indexdb with the returned review id;
-          addNewReviewLocal(db, data);
+          if ('indexedDB' in window) {
+            this.dbPromise.then(async db => {
+              if (db) {
+                this.addNewReviewLocal(db, data);
+              }
+            });
+          }
         });
     }
   }
