@@ -115,9 +115,6 @@ fillRestaurantHoursHTML = (
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.reviews) => {
-  const add_review = document.querySelector('.add-review-btn');
-  add_review.onclick = () => showReviewForm();
-
   if (reviews.length === 0) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
@@ -189,13 +186,18 @@ getParameterByName = (name, url) => {
 
 onReviewCancel = () => {
   const review_form = document.querySelector('.review-form');
-  const add_review = document.querySelector('.add-review-btn');
+  const add_review = document.querySelector('#add-review-btn');
   review_form.style.display = 'none';
   add_review.style.display = 'block';
 };
 
 onReviewSubmit = () => {
   const review_form = document.querySelector('.review-form');
+
+  if (!review_form.checkValidity()) {
+    return review_form.reportValidity();
+  }
+
   //Extract form data
   const name = review_form['name'].value;
   const rating = review_form['rating'].value;
@@ -205,7 +207,6 @@ onReviewSubmit = () => {
 
   // Data to be send
   let postData = { restaurant_id: id, name, rating, comments };
-  console.log(postData);
   DBHelper.addNewReview(postData, review => {
     onReviewCancel();
     const ul = document.getElementById('reviews-list');
@@ -214,7 +215,7 @@ onReviewSubmit = () => {
 };
 
 showReviewForm = () => {
-  const add_review = document.querySelector('.add-review-btn');
+  const add_review = document.querySelector('#add-review-btn');
   const review_form = document.querySelector('.review-form');
   add_review.style.display = 'none';
   review_form.style.display = 'flex';

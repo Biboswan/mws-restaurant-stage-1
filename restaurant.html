@@ -63,24 +63,23 @@
             <h3>Reviews</h3>
             <button tabindex="0" id="add-review-btn" onclick="showReviewForm()" class="brown-btn">Add Review</button>
           </div>
-          <form onsubmit="event.preventDefault()" class="review-form">
-            <label>Name:
-              <input name="name" placeholder='Enter your name' required />
-            </label>
-            <label>Rating:
-              <select name="rating">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </label>
-            <label>Review:
-              <textarea name="comments" placeholder='Enter your review here...' required></textarea>
-            </label>
+          <form onsubmit="event.preventDefault()" name="Add Review Form" class="review-form">
+            <label for="r_name">Name:</label>
+            <input id="r_name" name="name" placeholder='Enter your name' required aria-required="true" /><br />
+            <label for="r_rating">Rating:</label>
+            <select id="r_rating" name="rating">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select><br />
+            <label for="r_comment">Review:</label>
+            <textarea rows="15" id="r_comment" name="comments" placeholder='Enter your review here...' required
+              aria-required="true"></textarea><br />
             <div class="flex-container">
-              <button onclick="onReviewSubmit()">Submit</button><button onclick="onReviewCancel()">Cancel</button>
+              <button class="brown-btn" value="submit" onclick="onReviewSubmit()">Submit</button><button type="button"
+                class="brown-btn" value="cancel" onclick="onReviewCancel()">Cancel</button>
             </div>
           </form>
           <ul id="reviews-list"></ul>

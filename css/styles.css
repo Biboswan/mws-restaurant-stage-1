@@ -395,12 +395,13 @@ nav h1 a span {
   color: #666;
 }
 
-.add-review-btn {
+.brown-btn {
   background-color: var(--theme-brown-color);
   color: #fff;
   width: 25%;
   font-size: 10pt;
   min-width: 45px;
+  min-height: 45px;
   cursor: pointer;
 }
 
@@ -408,6 +409,17 @@ nav h1 a span {
   display: 'none';
   flex-direction: column;
   margin-top: 10px;
+  margin-bottom: 35px;
+}
+
+#r_name,
+#r_rating,
+#r_comment {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
 }
 /*====================== Responsive Details ====================== */
 .container {
