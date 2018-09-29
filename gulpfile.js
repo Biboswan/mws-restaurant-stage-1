@@ -31,10 +31,13 @@ gulp.task('copy index.html', () => {
   return gulp.src('index.html').pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy sw.js', () => {
+gulp.task('build sw.js', () => {
   return gulp
-    .src('sw.js')
+    .src(['sw.js', 'js/shared/*'])
+    .pipe(sourcemaps.init())
+    .pipe(concat('sw.js'))
     .pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'));
 });
 
@@ -44,7 +47,7 @@ gulp.task('copy restaurant.html', () => {
 
 gulp.task('scripts-common', () => {
   return gulp
-    .src(['js/controller.js', 'js/shared/idb.js', 'js/dbhelper.js'])
+    .src(['js/controller.js', 'js/shared/*', 'js/dbhelper.js'])
     .pipe(sourcemaps.init())
     .pipe(concat('all.js'))
     .pipe(uglify())
@@ -122,7 +125,7 @@ gulp.task(
     'copy-images',
     'resize-images-400',
     'resize-images-560',
-    'copy sw.js',
+    'build sw.js',
     done => {
       browserSync.init({
         server: './dist/',
@@ -134,7 +137,7 @@ gulp.task(
       );
       gulp.watch('index.html', gulp.series('copy index.html'));
       gulp.watch('restaurant html', gulp.series('copy restaurant.html'));
-      gulp.watch('sw.js', gulp.series('copy sw.js'));
+      gulp.watch('sw.js', gulp.series('build sw.js'));
       gulp.watch('dist/**/*.html').on('change', browserSync.reload);
 
       done();
