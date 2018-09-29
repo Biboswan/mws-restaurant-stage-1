@@ -1,5 +1,5 @@
 const openDatabase = () => {
-  return idb.open('restaurant-review-stores', 1, upgradeDb => {
+  return idb.open('restaurant-review-stores', 2, upgradeDb => {
     upgradeDb.createObjectStore('restaurants', {
       keyPath: 'id',
     });
