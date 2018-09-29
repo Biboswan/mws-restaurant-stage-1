@@ -1,5 +1,6 @@
 const staticCacheName = 'restaurantreviews-static-v1';
 const contentImgsCache = 'restaurantreviews-content-v1';
+const syncStore = {};
 const allCaches = [staticCacheName, contentImgsCache];
 
 self.addEventListener('install', event => {
@@ -92,3 +93,30 @@ const serveImage = request => {
     });
   });
 };
+
+self.addEventListener('sync', event => {
+  // get the data by tag
+  const { url, options } = syncStore[event.tag];
+  event.waitUntil(
+    fetch(url, options)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .then(() => {
+        delete syncStore[event.tag];
+      })
+  );
+});
+
+self.addEventListener('message', event => {
+  const { type, payload } = event.data;
+  if (type === 'add_review_sync') {
+    // get a unique id to save the data
+    const id = Date.now();
+    syncStore[id] = payload;
+    console.log(payload);
+    // register a sync and pass the id as tag for it to get the data
+    self.registration.sync.register(id);
+  }
+});

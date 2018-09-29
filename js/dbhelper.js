@@ -378,31 +378,33 @@ class DBHelper {
       });
     }
 
-    this.addNewReviewNetwork(data);
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'add_review_sync',
+        payload: {
+          url: `${this.REVIEWS_DATABASE_URL}/`,
+          options: {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          },
+        },
+      });
+    }
   }
 
   static addNewReviewLocal(db, data) {
-    const tx = db.transaction('reviews');
+    const tx = db.transaction('reviews', 'readwrite');
     const store = tx.objectStore('reviews');
     const { restaurant_id } = data;
-    return store.get(restaurant_id).then(reviews => {
+    return store.get(restaurant_id).then(async reviews => {
       console.log(reviews);
       reviews.unshift(data);
-      store.put(reviews, restaurant_id);
+      await store.put(reviews, restaurant_id);
       return tx.complete;
     });
-  }
-
-  static addNewReviewNetwork(data) {
-    fetch(`${this.REVIEWS_DATABASE_URL}/`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(data => console.log(data));
   }
 }
