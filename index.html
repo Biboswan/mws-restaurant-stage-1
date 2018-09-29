@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta name="viewport" content="width=device-width" initial-scale="1">
-    <meta charset="utf-8">
-    <meta name="theme-color" content="#945c03">
-    <link rel="shortcut icon" href="icons/RR-32.png">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" href="/css/styles.css">
-    <title>Restaurant Reviews</title>
-  </head>
+<head>
+  <meta name="viewport" content="width=device-width" initial-scale="1">
+  <meta name="description" content="This page contains the basic details of various restaurants of varying cusines chineese, amercian,mexican etc">
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#945c03">
+  <link rel="shortcut icon" href="icons/RR-32.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Restaurant Reviews</title>
+</head>
 
-  <body>
-    <header>
-      <nav>
-        <h1><a href="/"><span>Restaurant Reviews</span></a></h1>
-      </nav>
-    </header>
+<body>
+  <header>
+    <nav>
+      <h1><a href="/"><span>Restaurant Reviews</span></a></h1>
+    </nav>
+  </header>
 
-    <main class="maincontent">
-      <section class="map-container">
-        <div role="application" class="map"></div>
-      </section>
-      <section>
-        <ul class="filter-options">
-          <li class="form-title">Filter Results</li>
-          <li class="filter-options__item">
-            <label class="label-filter-options" for="neighborhoods-select">Neighborhood Category</label>
-            <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
-              <option value="all">All Neighborhoods</option>
-            </select>
-          </li>
-          <li class="filter-options__item">
-            <label class="label-filter-options" for="cuisines-select">Cusine Category</label>
-            <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
-              <option value="all">All Cuisines</option>
-            </select>
-          </li>
-        </ul>
-        <div class="filter-bar-smalldev">
-         <img alt="filter icon" class="filter-icon" role="button" aria-pressed="false" tabindex="0" src=".././filter.png"/>
-        </div>
-        <ul class="restaurants-list container" ></ul>
-      </section>
-    </main>
+  <main class="maincontent">
+    <section class="map-container">
+      <div role="application" class="map"></div>
+    </section>
+    <section>
+      <ul class="filter-options">
+        <li class="form-title">Filter Results</li>
+        <li class="filter-options__item">
+          <label class="label-filter-options" for="neighborhoods-select">Neighborhood Category</label>
+          <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+            <option value="all">All Neighborhoods</option>
+          </select>
+        </li>
+        <li class="filter-options__item">
+          <label class="label-filter-options" for="cuisines-select">Cusine Category</label>
+          <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+            <option value="all">All Cuisines</option>
+          </select>
+        </li>
+      </ul>
+      <div class="filter-bar-smalldev">
+        <img alt="filter icon" class="filter-icon" role="button" aria-pressed="false" tabindex="0" src=".././filter.png" />
+      </div>
+      <ul class="restaurants-list container"></ul>
+    </section>
+  </main>
 
-    <script src="js/all.js"></script> 
-    <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHka3yteG9NVsLDRCSPuZLv_Vi9FDV640&libraries=places&callback=initMap"></script>
-    <!-- Register service worker -->
-    <noscript>Your javascript is disabled</noscript>
+  <script src="js/all.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHka3yteG9NVsLDRCSPuZLv_Vi9FDV640&libraries=places&callback=initMap"></script>
+  <!-- Register service worker -->
+  <noscript>Your javascript is disabled</noscript>
 
-    <footer id="footer">
-      Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
-    </footer>
+  <footer id="footer">
+    Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+  </footer>
 
-  </body>
+</body>
 
 </html>
