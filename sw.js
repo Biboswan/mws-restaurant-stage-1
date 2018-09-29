@@ -94,6 +94,21 @@ const serveImage = request => {
   });
 };
 
+const addNewReviewLocal = data => {
+  return openDatabase().then(db => {
+    const tx = db.transaction('reviews', 'readwrite');
+    const store = tx.objectStore('reviews');
+    const { restaurant_id } = data;
+    return store.get(restaurant_id).then(async reviews => {
+      //delete review which was added to indexdb without contacting the server (lacking review id)
+      const updated_reviews = reviews.filter(review => review.id);
+      updated_reviews.unshift(data);
+      await store.put(updated_reviews, restaurant_id);
+      return tx.complete;
+    });
+  });
+};
+
 self.addEventListener('sync', event => {
   // get the data by tag
   const { url, options } = syncStore[event.tag];
@@ -101,7 +116,7 @@ self.addEventListener('sync', event => {
     fetch(url, options)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        addNewReviewLocal(data);
       })
       .then(() => {
         delete syncStore[event.tag];
@@ -111,7 +126,7 @@ self.addEventListener('sync', event => {
 
 self.addEventListener('message', event => {
   const { type, payload } = event.data;
-  if (type === 'add_review_sync') {
+  if (type === 'ADD_REVIEW_SYNC') {
     // get a unique id to save the data
     const id = Date.now();
     syncStore[id] = payload;

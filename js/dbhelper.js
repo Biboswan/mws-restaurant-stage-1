@@ -19,7 +19,7 @@ class DBHelper {
   }
 
   static get dbPromise() {
-    return this.openDatabase();
+    return openDatabase();
   }
   /**
    * Fetch all restaurants
@@ -272,20 +272,6 @@ class DBHelper {
     return marker;
   }
 
-  static openDatabase() {
-    //check for support
-    if (!('indexedDB' in window)) {
-      console.log("This browser doesn't support IndexedDB");
-      return Promise.resolve();
-    }
-    return idb.open('restaurant-review-stores', 1, upgradeDb => {
-      upgradeDb.createObjectStore('restaurants', {
-        keyPath: 'id',
-      });
-      upgradeDb.createObjectStore('reviews');
-    });
-  }
-
   static fillDatabase(items) {
     let tx, store;
     this.dbPromise.then(db => {
@@ -368,6 +354,7 @@ class DBHelper {
   }
 
   static addNewReview(data, callback) {
+    // offline first
     if ('indexedDB' in window) {
       this.dbPromise.then(async db => {
         if (db) {
@@ -377,22 +364,33 @@ class DBHelper {
         }
       });
     }
+    const url = `${this.REVIEWS_DATABASE_URL}/`;
+    const options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
 
+    //Background Sync
     if (navigator.serviceWorker && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({
-        type: 'add_review_sync',
+        type: 'ADD_REVIEW_SYNC',
         payload: {
-          url: `${this.REVIEWS_DATABASE_URL}/`,
-          options: {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          },
+          url,
+          options,
         },
       });
+    } else {
+      fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+          console.log('review uploaded!');
+          //Once reviewed is uploaded, update the indexdb with the returned review id;
+          addNewReviewLocal(db, data);
+        });
     }
   }
 
