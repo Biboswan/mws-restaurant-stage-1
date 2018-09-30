@@ -1,12 +1,14 @@
 let restaurants, neighborhoods, cuisines, pressed;
-var markers = [];
+let markers = [];
+let newMap;
 
-const map = document.querySelector('.map');
+//const map = document.querySelector('.map');
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', event => {
+  initMap();
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -69,18 +71,27 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 };
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize  map, called from HTML.
  */
-window.initMap = () => {
-  let loc = {
-    lat: 40.722216,
-    lng: -73.987501,
-  };
-  self.map = new google.maps.Map(map, {
+const initMap = () => {
+  self.newMap = L.map('map', {
+    center: [40.722216, -73.987501],
     zoom: 12,
-    center: loc,
-    scrollwheel: false,
+    scrollWheelZoom: false,
   });
+  L.tileLayer(
+    'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}',
+    {
+      mapboxToken:
+        'pk.eyJ1IjoiYmlib3N3YW4iLCJhIjoiY2ptb3Rnd3B4MTRncjNwbzdzeW40N3l3dyJ9.fEvDf70hxJqycVH3x55nJw',
+      maxZoom: 18,
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox.streets',
+    }
+  ).addTo(newMap);
   updateRestaurants();
 };
 
@@ -122,7 +133,9 @@ resetRestaurants = restaurants => {
   ul.innerHTML = '';
 
   // Remove all map markers
-  self.markers.forEach(m => m.setMap(null));
+  if (self.markers) {
+    self.markers.forEach(marker => marker.remove());
+  }
   self.markers = [];
   self.restaurants = restaurants;
 };
@@ -135,6 +148,8 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
+
+  lazyload();
   addMarkersToMap();
 };
 
@@ -146,10 +161,12 @@ createRestaurantHTML = restaurant => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant_400(restaurant);
+  image.classList.add('lazy');
+  image.src = 'placeholder.jpg';
+  image.dataset.src = DBHelper.imageUrlForRestaurant_400(restaurant);
 
   let image2x = DBHelper.imageUrlForRestaurant(restaurant);
-  image.srcset = `${image.src} 1x, ${image2x} 2x`;
+  image.dataset.srcset = `${image.dataset.src} 1x, ${image2x} 2x`;
   image.alt = `Photo of restaurant ${restaurant.name}`;
   li.append(image);
 
@@ -192,17 +209,42 @@ createRestaurantHTML = restaurant => {
   return li;
 };
 
+lazyload = () => {
+  const lazyImages = [].slice.call(document.querySelectorAll('.lazy'));
+
+  if ('IntersectionObserver' in window) {
+    let lazyImageObserver = new IntersectionObserver(function(
+      entries,
+      observer
+    ) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target;
+          lazyImage.src = lazyImage.dataset.src;
+          lazyImage.srcset = lazyImage.dataset.srcset;
+          lazyImage.classList.remove('lazy');
+          lazyImageObserver.unobserve(lazyImage);
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage);
+    });
+  }
+};
+
 /**
  * Add markers for current restaurants to the map.
  */
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-    google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url;
-    });
-    self.markers.push(marker);
+    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
+    marker.on('click', onClick);
+    function onClick() {
+      window.location.href = marker.options.url;
+    }
   });
 };
 
@@ -217,13 +259,4 @@ filtericon.onclick = e => {
   pressed = filtericon.getAttribute('aria-pressed') === 'true';
   // Change aria-pressed to the opposite state
   filtericon.setAttribute('aria-pressed', !pressed);
-};
-
-/**
- * title to map once DOM body is loaded
- */
-const body = document.querySelector('body');
-body.onload = () => {
-  map.getElementsByTagName('iframe')[0].title =
-    'map of the neighbourhood location with markers of the desired restaurants filtered';
 };

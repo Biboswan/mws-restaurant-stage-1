@@ -1,20 +1,21 @@
 {
-    "name": "restaurant_review_app",
-    "devDependencies": {
-        "ajv": "^6.5.2",
-        "browser-sync": "^2.24.5",
-        "gulp": "^4.0.0",
-        "gulp-autoprefixer": "^5.0.0",
-        "gulp-babel": "^7.0.1",
-        "gulp-clean-css": "^3.9.4",
-        "gulp-eslint": "^5.0.0",
-        "gulp-image-resize": "^0.13.0",
-        "gulp-rename": "^1.4.0",
-        "gulp-uglify": "^3.0.0",
-        "uglify-es": "github:mishoo/UglifyJS2#harmony"
-    },
-    "dependencies": {
-        "gulp-concat": "^2.6.1",
-        "gulp-sourcemaps": "^2.6.4"
-    }
+  "name": "restaurant_review_app",
+  "devDependencies": {
+    "ajv": "^6.5.2",
+    "browser-sync": "^2.24.5",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-eslint": "^5.0.0",
+    "gulp-image-resize": "^0.13.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.0",
+    "uglify-es": "github:mishoo/UglifyJS2#harmony"
+  },
+  "dependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-gzip": "^1.4.2",
+    "gulp-sourcemaps": "^2.6.4"
+  }
 }

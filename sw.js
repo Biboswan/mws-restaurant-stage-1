@@ -18,8 +18,15 @@ self.addEventListener('install', event => {
           new Request('js/restaurant_info.js', { cache: 'no-cache' }),
           new Request('css/styles.css', { cache: 'no-cache' }),
           new Request('manifest.json', { cache: 'no-cache' }),
+          new Request('https://unpkg.com/leaflet@1.3.1/dist/leaflet.css', {
+            mode: 'cors',
+          }),
+          new Request('https://unpkg.com/leaflet@1.3.1/dist/leaflet.js', {
+            mode: 'cors',
+          }),
           'icons/RR-32.png',
           'filter.png',
+          'placeholder.jpg',
         ]);
       })
       .then(() => self.skipWaiting())
