@@ -17,5 +17,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-gzip": "^1.4.2",
     "gulp-sourcemaps": "^2.6.4"
-  }
+  },
+  "author": "Biboswan Roy",
+  "email": "biboswan98@gmail.com"
 }
