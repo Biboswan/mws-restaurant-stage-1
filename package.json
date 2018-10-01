@@ -14,6 +14,7 @@
     "uglify-es": "github:mishoo/UglifyJS2#harmony"
   },
   "dependencies": {
+    "gulp-brotli": "^1.2.1",
     "gulp-concat": "^2.6.1",
     "gulp-gzip": "^1.4.2",
     "gulp-sourcemaps": "^2.6.4"

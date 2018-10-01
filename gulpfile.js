@@ -11,6 +11,7 @@ const composer = require('gulp-uglify/composer');
 const uglify = composer(uglifyes, console);
 const sourcemaps = require('gulp-sourcemaps');
 const imageResize = require('gulp-image-resize');
+const gzip = require('gulp-gzip');
 
 gulp.task('styles', () => {
   return gulp
@@ -23,6 +24,7 @@ gulp.task('styles', () => {
     )
     .pipe(cleanCSS())
     .pipe(sourcemaps.write())
+    .pipe(gzip())
     .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
 });
@@ -52,6 +54,7 @@ gulp.task('scripts-common', () => {
     .pipe(concat('all.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write())
+    .pipe(gzip())
     .pipe(gulp.dest('dist/js/'));
 });
 
@@ -61,6 +64,7 @@ gulp.task('scripts-individual', () => {
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write())
+    .pipe(gzip())
     .pipe(gulp.dest('dist/js/'));
 });
 

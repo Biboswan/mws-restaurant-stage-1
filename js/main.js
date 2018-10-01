@@ -162,7 +162,7 @@ createRestaurantHTML = restaurant => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.classList.add('lazy');
-  image.src = 'placeholder.jpg';
+  image.src = 'placeholder.png';
   image.dataset.src = DBHelper.imageUrlForRestaurant_400(restaurant);
 
   let image2x = DBHelper.imageUrlForRestaurant(restaurant);
