@@ -110,7 +110,7 @@ gulp.task('copy icons', () => {
 
 gulp.task('copy manifest and filter-icon', () => {
   return gulp
-    .src(['manifest.json', 'filter.png', 'placeholder.jpg'])
+    .src(['manifest.json', 'filter.png', 'placeholder.png'])
     .pipe(gulp.dest('dist/'));
 });
 

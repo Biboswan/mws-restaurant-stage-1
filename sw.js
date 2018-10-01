@@ -26,7 +26,7 @@ self.addEventListener('install', event => {
           }),
           'icons/RR-32.png',
           'filter.png',
-          'placeholder.jpg',
+          'placeholder.png',
         ]);
       })
       .then(() => self.skipWaiting())
