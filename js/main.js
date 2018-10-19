@@ -74,7 +74,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize  map, called from HTML.
  */
 const initMap = () => {
-  self.newMap = L.map('map', {
+  newMap = L.map('map', {
     center: [40.722216, -73.987501],
     zoom: 12,
     scrollWheelZoom: false,
@@ -91,7 +91,7 @@ const initMap = () => {
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       id: 'mapbox.streets',
     }
-  ).addTo(self.newMap);
+  ).addTo(newMap);
   updateRestaurants();
 };
 
@@ -240,7 +240,7 @@ lazyload = () => {
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
+    const marker = DBHelper.mapMarkerForRestaurant(restaurant, newMap);
     marker.on('click', onClick);
     function onClick() {
       window.location.href = marker.options.url;

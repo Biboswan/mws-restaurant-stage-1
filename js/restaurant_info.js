@@ -205,7 +205,7 @@ getParameterByName = (name, url) => {
 onReviewCancel = () => {
   const review_form = document.querySelector('.review-form');
   const add_review = document.querySelector('#add-review-btn');
-  review_form.style.display = 'none';
+  review_form.classList.add('show-none');
   add_review.style.display = 'block';
 };
 
@@ -236,5 +236,5 @@ showReviewForm = () => {
   const add_review = document.querySelector('#add-review-btn');
   const review_form = document.querySelector('.review-form');
   add_review.style.display = 'none';
-  review_form.style.display = 'flex';
+  review_form.classList.remove('show-none');
 };

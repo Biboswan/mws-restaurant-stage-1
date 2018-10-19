@@ -406,10 +406,14 @@ nav h1 a span {
 }
 
 .review-form {
-  display: 'none';
+  display: flex;
   flex-direction: column;
   margin-top: 10px;
   margin-bottom: 35px;
+}
+
+.show-none {
+  display: none;
 }
 
 #r_name,
