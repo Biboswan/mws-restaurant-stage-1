@@ -11,7 +11,12 @@ const composer = require('gulp-uglify/composer');
 const uglify = composer(uglifyes, console);
 const sourcemaps = require('gulp-sourcemaps');
 const imageResize = require('gulp-image-resize');
+//const htmlmin = require('gulp-htmlmin');
+const del = require('del');
 const gzip = require('gulp-gzip');
+const brotli = require('gulp-brotli');
+const connect = require('gulp-connect');
+const gzipStatic = require('connect-gzip-static');
 
 gulp.task('styles', () => {
   return gulp
@@ -24,7 +29,6 @@ gulp.task('styles', () => {
     )
     .pipe(cleanCSS())
     .pipe(sourcemaps.write())
-    .pipe(gzip())
     .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
 });
@@ -54,7 +58,6 @@ gulp.task('scripts-common', () => {
     .pipe(concat('all.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write())
-    .pipe(gzip())
     .pipe(gulp.dest('dist/js/'));
 });
 
@@ -64,7 +67,6 @@ gulp.task('scripts-individual', () => {
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(sourcemaps.write())
-    .pipe(gzip())
     .pipe(gulp.dest('dist/js/'));
 });
 
@@ -119,7 +121,7 @@ gulp.task('copy manifest and filter-icon', () => {
 });
 
 gulp.task(
-  'default',
+  'process',
   gulp.parallel(
     'styles',
     'copy index.html',
@@ -150,3 +152,67 @@ gulp.task(
     }
   )
 );
+
+gulp.task('gzip-js', () => {
+  return gulp
+    .src('dist/js/**/*')
+    .pipe(gzip())
+    .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('gzip-css', () => {
+  return gulp
+    .src('dist/css/**/*')
+    .pipe(gzip())
+    .pipe(gulp.dest('dist/css/'));
+});
+
+gulp.task('gzip', gulp.parallel('gzip-js', 'gzip-css'));
+
+gulp.task('br-js', () => {
+  return gulp
+    .src('dist/js/**/*')
+    .pipe(
+      brotli.compress({
+        skipLarger: true,
+        quality: 11,
+      })
+    )
+    .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('br-css', () => {
+  return gulp
+    .src('dist/css/**/*')
+    .pipe(
+      brotli.compress({
+        skipLarger: true,
+        quality: 11,
+      })
+    )
+    .pipe(gulp.dest('dist/css/'));
+});
+
+gulp.task('br', gulp.parallel('br-js', 'br-css'));
+
+gulp.task('compression', gulp.parallel('gzip', 'br'));
+
+gulp.task('clean:dist', () => {
+  return del('dist/**/*');
+});
+
+gulp.task('default', gulp.series('clean:dist', 'process', 'compression'));
+
+gulp.task('serve', () => {
+  connect.server({
+    root: 'dist/',
+    port: 9000,
+    middleware: function() {
+      return [
+        gzipStatic(__dirname, {
+          maxAge: 86400000,
+        }),
+      ];
+    },
+  });
+});
