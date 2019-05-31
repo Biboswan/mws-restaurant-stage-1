@@ -20,6 +20,23 @@ Brower sync at `port 3000` might interfere with audit scores.
 
 ### Some Features:
 
-Responsive Design
-Offline Support (including background sync)
-Lazy loading
+- Responsive Design
+- Offline Support (including background sync)
+- Lazy loading
+
+### Audit Scores in mobile mode
+
+![alt text](https://github.com/Biboswan/mws-restaurant-stage-1/blob/master/screenshots/Audit%20Scores(mobile).png)
+
+### Audit Scores in desktop mode
+
+![alt text](https://github.com/Biboswan/mws-restaurant-stage-1/blob/master/screenshots/Audit%20Scores(Desktop).png)
+
+
+### Preview
+
+![alt text](https://github.com/Biboswan/mws-restaurant-stage-1/blob/master/screenshots/p2.png)
+
+
+
+![alt text](https://github.com/Biboswan/mws-restaurant-stage-1/blob/master/screenshots/p5.png)
