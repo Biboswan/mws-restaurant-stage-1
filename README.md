@@ -17,3 +17,9 @@
 You need to have [ImageMagick](https://www.imagemagick.org/script/index.php) and gulp cli already installed in your system.
 
 Brower sync at `port 3000` might interfere with audit scores.
+
+### Some Features:
+
+Responsive Design
+Offline Support (including background sync)
+Lazy loading
